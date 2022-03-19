@@ -1,5 +1,5 @@
 package login;
 
-public class Profesor extends Korisnik {
+public class Ucenik extends Korisnik {
 	// TODO: Na osnovu dobijenog korisnickog imena, povuci iz baze sve pristupne_podatke.
 }

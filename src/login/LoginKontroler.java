@@ -40,7 +40,8 @@ public class LoginKontroler implements Initializable {
 		prijavaTipka.setOnAction(event -> {
             String korisnickoIme = prijavaTipka.getText();
             String lozinka = prijavaTipka.getText();
-            // TODO: Zavrsi ostatak.
+            // TODO: Cita sviProfesori i sviUcenici i poziva odgovarajucu metodu klase Profesor ili Ucenik.
+            // Mozda i validiraj unos.
             
 		});
 	}
