@@ -20,7 +20,7 @@ public class Predmet {
 	
 	private boolean predmetPostoji(Predmet predmet) {
         for (Predmet p : sviPredmeti) {
-            if (p.naziv.equals(predmet.naziv)) {
+            if (p.naziv.equals(predmet.naziv) && (p.razred == predmet.razred)) {
                 return true;
             }
         }

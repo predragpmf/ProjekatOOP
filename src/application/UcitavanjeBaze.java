@@ -7,7 +7,7 @@ import java.util.Date;
 public class UcitavanjeBaze {
 	private static BazaPodataka db = new BazaPodataka();
 	
-	public void ucitavanje() {
+	public static void ucitavanje() {
         db.uspostaviVezu();
         ucitajSkole();
         ucitajPredmete();
@@ -23,7 +23,7 @@ public class UcitavanjeBaze {
     }
 	
 	// Ucitava sve podatke iz baze u klase:
-	private void ucitajSkole() {
+	private static void ucitajSkole() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from skola");
@@ -40,7 +40,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajPredmete() {
+	private static void ucitajPredmete() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from predmet");
@@ -55,7 +55,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajPitanja() {
+	private static void ucitajPitanja() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from pitanje");
@@ -69,7 +69,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajPristupnePodatke() {
+	private static void ucitajPristupnePodatke() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from pristupni_podaci");
@@ -85,7 +85,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajProfesore() {
+	private static void ucitajProfesore() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from profesor");
@@ -102,7 +102,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajOcjene() {
+	private static void ucitajOcjene() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from ocjena");
@@ -119,7 +119,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajUcenike() {
+	private static void ucitajUcenike() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from ucenik");
@@ -136,7 +136,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajPredmeteUSkoli() {
+	private static void ucitajPredmeteUSkoli() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from predmet_u_skoli");
@@ -152,7 +152,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajIzostanke() {
+	private static void ucitajIzostanke() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from izostanci");
@@ -168,7 +168,7 @@ public class UcitavanjeBaze {
         }
 	}
 	
-	private void ucitajOcjenePredmeta() {
+	private static void ucitajOcjenePredmeta() {
 		try {
             Statement izjava = db.getVeza().createStatement();
             ResultSet setRezultata = izjava.executeQuery("select * from ocjena_predmeta");
