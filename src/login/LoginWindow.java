@@ -10,6 +10,7 @@ public class LoginWindow extends Application{
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login/Login.fxml"));
 			Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+			primaryStage.setResizable(false);
 			primaryStage.setTitle("Prijava");
 			primaryStage.setScene(scene);
 			primaryStage.show();
