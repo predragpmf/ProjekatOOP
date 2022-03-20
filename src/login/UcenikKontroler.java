@@ -1,5 +1,8 @@
+//
+//	Kontroler za prozor ucenika.
+//
 package login;
 
 public class UcenikKontroler {
-	// TODO: Napravi i poseban fxml.
+	// TODO: SVE
 }

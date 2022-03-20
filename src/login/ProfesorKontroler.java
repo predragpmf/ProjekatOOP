@@ -1,5 +1,11 @@
+//
+//	Kontroler za prozor profesora.
+//
 package login;
 
-public class ProfesorKontroler {
-	// TODO: Napravi i poseban fxml.
+import application.Korisnik;
+
+public class ProfesorKontroler extends Korisnik {
+	// TODO: SVE
+	
 }

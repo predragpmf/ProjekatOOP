@@ -1,3 +1,6 @@
+//
+//	Ucitavanje podataka iz baze.
+//
 package application;
 
 import java.sql.ResultSet;

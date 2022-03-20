@@ -37,4 +37,16 @@ public class PristupniPodaci {
 		return null;
 	}
 	
+	public String getKorisnickoIme() {
+		return korisnickoIme;
+	}
+	
+	public String getSifra() {
+		return sifra;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
 }

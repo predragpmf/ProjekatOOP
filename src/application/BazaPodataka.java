@@ -1,3 +1,6 @@
+//
+//	Sve za vezu sa bazom podataka.
+//
 package application;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,12 +13,13 @@ public class BazaPodataka {
 	public void uspostaviVezu() {
 		try {
 			String dbKorisnik = "root";
-			String dbSifra = "";
+			String dbSifra = "admin1234";
 			String url = "jdbc:mariadb://localhost";
 			int port = 3306;
 			String dbNaziv = "ors1_opp_2021_2022";
 			url = url + ":" + port + "/" + dbNaziv;
 			veza = DriverManager.getConnection(url, dbKorisnik, dbSifra);
+			System.out.println("Veza sa bazom podataka uspostavljena!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
