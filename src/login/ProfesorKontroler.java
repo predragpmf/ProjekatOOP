@@ -3,9 +3,18 @@
 //
 package login;
 
-import application.Korisnik;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ProfesorKontroler extends Korisnik {
-	// TODO: SVE
+import javafx.fxml.Initializable;
+
+public class ProfesorKontroler implements Initializable{
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		
+	}
+	
 	
 }

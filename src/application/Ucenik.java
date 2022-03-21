@@ -3,9 +3,6 @@ package application;
 import java.util.ArrayList;
 
 public class Ucenik extends Korisnik {
-	//private int id, pol;
-	//private String ime, prezime;
-	//private PristupniPodaci pristupId;
 	public static ArrayList<Ucenik> sviUcenici = new ArrayList<>();
 	
 	public Ucenik(int id, String ime, String prezime, int pol, int pristupniPodaciId) {
@@ -15,6 +12,7 @@ public class Ucenik extends Korisnik {
 		this.pol = pol;
 		this.pristupId = pristupniPodaciId;
 		sviUcenici.add(this);
+		sviKorisnici.add(this);
 	}
 	
 	public static Ucenik getUcenik(int id) {

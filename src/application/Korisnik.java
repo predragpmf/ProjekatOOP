@@ -10,10 +10,6 @@ public class Korisnik {
 	protected String ime, prezime;
 	protected int pristupId;
 	public static ArrayList<Korisnik> sviKorisnici = new ArrayList<>();
-	public Korisnik() {
-		sviKorisnici.addAll(Ucenik.sviUcenici);
-		sviKorisnici.addAll(Profesor.sviProfesori);
-	}
 	
 	public int getPristupId() {
 		return pristupId;

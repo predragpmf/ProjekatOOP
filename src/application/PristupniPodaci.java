@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class PristupniPodaci {
 	private int id;
-	private String korisnickoIme, sifra, email;
+	private String korisnickoIme, lozinka, email;
 	public static ArrayList<PristupniPodaci> sviPristupniPodaci = new ArrayList<>();
 	
-	public PristupniPodaci(int id, String korisnickoIme, String sifra, String email) throws Exception{
+	public PristupniPodaci(int id, String korisnickoIme, String lozinka, String email) throws Exception{
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
-		this.sifra = sifra;
+		this.lozinka = lozinka;
 		this.email = email;
 		if(!pristupniPodaciPostoje(this)) {
 			sviPristupniPodaci.add(this);
@@ -41,8 +41,8 @@ public class PristupniPodaci {
 		return korisnickoIme;
 	}
 	
-	public String getSifra() {
-		return sifra;
+	public String getLozinka() {
+		return lozinka;
 	}
 	
 	public int getId() {

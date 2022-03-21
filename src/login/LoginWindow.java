@@ -3,6 +3,8 @@
 //
 package login;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +15,18 @@ public class LoginWindow extends Application{
 	
     public static Stage getStage() {
         return loginStage;
+    }
+    
+    public static void promjeniScenu(String fxmlPutanja, String naslov, int sirina, int visina) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(LoginWindow.class.getResource(fxmlPutanja));
+			Scene scene = new Scene(fxmlLoader.load(), sirina, visina);
+			getStage().setResizable(false);
+			getStage().setTitle(naslov);
+			getStage().setScene(scene);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 	
 	public void start(Stage primaryStage) throws Exception {
@@ -26,7 +40,6 @@ public class LoginWindow extends Application{
 	}
 	
 	public static void main(String[] args) {
-		login.LoginKontroler.args = args;
 		launch(args);
 	}
 	

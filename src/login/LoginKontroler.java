@@ -3,7 +3,6 @@
 //
 package login;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -11,9 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -25,8 +22,6 @@ import application.Ucenik;
 import application.Korisnik;
 
 public class LoginKontroler implements Initializable {
-	
-	public static String[] args;
 	
 	@FXML
     private TextField korisnikUnos;
@@ -52,57 +47,39 @@ public class LoginKontroler implements Initializable {
 			alert.showAndWait();
 		});
 		prijavaTipka.setOnAction(event -> {
-			//System.out.println("Pritisak tipke!");
             String korisnickoIme = korisnikUnos.getText().strip();
-            //System.out.println(korisnickoIme);
-            String sifra = lozinkaUnos.getText().strip();
-            //System.out.println(sifra);
+            String lozinka = lozinkaUnos.getText().strip();
             for(PristupniPodaci pp : PristupniPodaci.sviPristupniPodaci) {
-            	//System.out.println(pp.getKorisnickoIme() == korisnickoIme.strip());
-            	if((pp.getKorisnickoIme().equals(korisnickoIme)) && (pp.getSifra().equals(hesirajSifru(sifra)))) {
-            		System.out.println("Postoji korisnik!");
-            		new Korisnik();
-            		for(Korisnik k : Korisnik.sviKorisnici) {
-            			if(pp.getId() == k.getPristupId()) {
-            				if(k instanceof Ucenik) {
-            					System.out.println("Korisnik je ucenik!");
-								try {
-									FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login/Ucenik.fxml"));
-	            					Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-	            					LoginWindow.getStage().setResizable(false);
-	            					LoginWindow.getStage().setTitle("Ucenik");
-	            					LoginWindow.getStage().setScene(scene);
-	            					//LoginWindow.getStage().show();
-	            					break;
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-            				} else {
-            					System.out.println("Korisnik je profesor!");
-            					try {
-									FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login/Profesor.fxml"));
-	            					Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-	            					LoginWindow.getStage().setResizable(false);
-	            					LoginWindow.getStage().setTitle("Profesor");
-	            					LoginWindow.getStage().setScene(scene);
-	            					//LoginWindow.getStage().show();
-	            					break;
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							}
-            			}
+            	if(pp.getKorisnickoIme().equals(korisnickoIme)) {
+            		if(pp.getLozinka().equals(hesirajLozinku(lozinka))) {
+            			System.out.println("Postoji korisnik!");
+                		for(Korisnik k : Korisnik.sviKorisnici) {
+                			if(pp.getId() == k.getPristupId()) {
+                				if(k instanceof Ucenik) {
+                					System.out.println("Korisnik je ucenik!");
+                					LoginWindow.promjeniScenu("/login/Ucenik.fxml", "Ucenik", 800, 600);
+                					return;
+                				} else {
+                					System.out.println("Korisnik je profesor!");
+                					LoginWindow.promjeniScenu("/login/Profesor.fxml", "Profesor", 800, 600);
+                					return;
+    							}
+                			}
+                		}
             		}
+            		obavjestenjeProzor("Pogrešna loznika!");
+            		return;
 				}
+            	
             }
-            
+            obavjestenjeProzor("Korisnik ne postoji!");
 		});
 	}
 	
-	private String hesirajSifru(String sifra) {
+	private String hesirajLozinku(String lozinka) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			byte[] messageDigest = md.digest(sifra.getBytes());
+			byte[] messageDigest = md.digest(lozinka.getBytes());
 	        BigInteger no = new BigInteger(1, messageDigest);
 	        String hashtext = no.toString(16);
 	        while (hashtext.length() < 32) {
@@ -113,6 +90,16 @@ public class LoginKontroler implements Initializable {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	private void obavjestenjeProzor(String poruka) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Greška!");
+        alert.setHeaderText(null);
+        alert.setContentText(poruka);
+        korisnikUnos.clear();
+        lozinkaUnos.clear();
+        alert.showAndWait();
 	}
 	
 }
