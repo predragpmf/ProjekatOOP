@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public class Profesor extends Korisnik {
 	public static ArrayList<Profesor> sviProfesori = new ArrayList<>();
+	public static Profesor prijavljeniProfesor;
 	
-	public Profesor(int id, String ime, String prezime, int pol, int pristupId) {
+	public Profesor(int id, String ime, String prezime, int pol, int pristupniPodaciId) {
 		this.id = id;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.pol = pol;
-		this.pristupId = pristupId;
+		this.pristupniPodaci = PristupniPodaci.getPristupniPodaci(pristupniPodaciId);
 		sviProfesori.add(this);
 		sviKorisnici.add(this);
 	}
@@ -21,6 +22,7 @@ public class Profesor extends Korisnik {
 				return p;
 			}
 		}
+		System.err.println("Profesor nije pronadjen (Profesor.getProfesor)");
 		return null;
 	}
 	

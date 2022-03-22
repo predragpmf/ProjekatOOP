@@ -6,14 +6,14 @@ import java.util.Date;
 public class Izostanci {
 	private int id;
 	private Date datum;
-	private Ucenik ucenikId;
-	private PredmetUSkoli predmetUSkoliId;
+	private Ucenik ucenik;
+	private PredmetUSkoli predmetUSkoli;
 	public static ArrayList<Izostanci> sviIzostanci = new ArrayList<>();
 	
 	public Izostanci(int id, int ucenikId, int predmetUSkoliId, Date datum) {
 		this.id = id;
-		this.ucenikId = Ucenik.getUcenik(ucenikId);
-		this.predmetUSkoliId = PredmetUSkoli.getPredmetUSkoli(predmetUSkoliId);
+		this.ucenik = Ucenik.getUcenik(ucenikId);
+		this.predmetUSkoli = PredmetUSkoli.getPredmetUSkoli(predmetUSkoliId);
 		this.datum = datum;
 		sviIzostanci.add(this);
 	}

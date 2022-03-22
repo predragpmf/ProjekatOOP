@@ -32,6 +32,7 @@ public class Pitanje {
 				return p;
 			}
 		}
+		System.err.println("Pitanje nije pronadjeno (Pitanje.getPitanje)");
 		return null;
 	}
 	

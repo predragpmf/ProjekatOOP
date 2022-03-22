@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class PredmetUSkoli {
 	private int id;
-	private Predmet predmetId;
-	private Skola skolaId;
-	private Profesor profesorId;
+	private Predmet predmet;
+	private Skola skola;
+	private Profesor profesor;
 	public static ArrayList<PredmetUSkoli> sviPredmetiUSkoli = new ArrayList<>();
 	
 	public PredmetUSkoli(int id, int predmetId, int skolaId, int profesorId) {
 		this.id = id;
-		this.predmetId = Predmet.getPredmet(predmetId);
-		this.profesorId = Profesor.getProfesor(profesorId);
-		this.skolaId = Skola.getSkola(skolaId);
-		// TODO
+		this.predmet = Predmet.getPredmet(predmetId);
+		this.profesor = Profesor.getProfesor(profesorId);
+		this.skola = Skola.getSkola(skolaId);
+		sviPredmetiUSkoli.add(this);
 	}
 	
 	public static PredmetUSkoli getPredmetUSkoli(int id) {
@@ -23,7 +23,15 @@ public class PredmetUSkoli {
 				return pus;
 			}
 		}
+		System.err.println("Predmet u skoli nije pronadjen (PredmetUSkoli.getPredmetUSkoli");
 		return null;
 	}
 	
+	public Skola getSkola() {
+		return skola;
+	}
+	
+	public Predmet getPredmet() {
+		return predmet;
+	}
 }

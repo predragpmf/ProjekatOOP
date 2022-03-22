@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class PristupniPodaci {
 	private int id;
-	private String korisnickoIme, lozinka, email;
+	private String korisnickoIme, email;
+	private String lozinka;
 	public static ArrayList<PristupniPodaci> sviPristupniPodaci = new ArrayList<>();
 	
 	public PristupniPodaci(int id, String korisnickoIme, String lozinka, String email) throws Exception{
@@ -34,6 +35,7 @@ public class PristupniPodaci {
 				return pp;
 			}
 		}
+		System.err.println("Pristupni podaci nisu pronadjeni (PristupniPodaci.getPristupniPodaci)");
 		return null;
 	}
 	

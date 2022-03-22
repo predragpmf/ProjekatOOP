@@ -18,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import application.PristupniPodaci;
+import application.Profesor;
 import application.Ucenik;
 import application.Korisnik;
 
@@ -54,12 +55,14 @@ public class LoginKontroler implements Initializable {
             		if(pp.getLozinka().equals(hesirajLozinku(lozinka))) {
             			System.out.println("Postoji korisnik!");
                 		for(Korisnik k : Korisnik.sviKorisnici) {
-                			if(pp.getId() == k.getPristupId()) {
+                			if(pp.getId() == k.getPristupniPodaciId()) {
                 				if(k instanceof Ucenik) {
+                					Korisnik.prijavljeniKorisnik = k;
                 					System.out.println("Korisnik je ucenik!");
                 					LoginWindow.promjeniScenu("/login/Ucenik.fxml", "Ucenik", 800, 600);
                 					return;
                 				} else {
+                					Korisnik.prijavljeniKorisnik = k;
                 					System.out.println("Korisnik je profesor!");
                 					LoginWindow.promjeniScenu("/login/Profesor.fxml", "Profesor", 800, 600);
                 					return;

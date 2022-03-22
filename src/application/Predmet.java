@@ -33,7 +33,12 @@ public class Predmet {
 				return p;
 			}
 		}
+		System.err.println("Predmet nije pronadjen (Predmet.getPredmet)");
 		return null;
+	}
+	
+	public int getRazred() {
+		return razred;
 	}
 	
 }

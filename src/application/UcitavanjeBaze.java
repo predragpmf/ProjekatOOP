@@ -12,17 +12,18 @@ public class UcitavanjeBaze {
 	
 	public static void ucitavanje() {
         db.uspostaviVezu();
+        ucitajPristupnePodatke();
         ucitajSkole();
         ucitajPredmete();
         ucitajPitanja();
-        ucitajPristupnePodatke();
         ucitajProfesore();
-        ucitajOcjene();
         ucitajUcenike();
         ucitajPredmeteUSkoli();
+        ucitajOcjene();
         ucitajIzostanke();
         ucitajOcjenePredmeta();
         db.prekidVeze();
+        System.out.println("Ucitavanje baze zavrseno!");
     }
 	
 	// Ucitava sve podatke iz baze u klase:
@@ -177,11 +178,11 @@ public class UcitavanjeBaze {
             ResultSet setRezultata = izjava.executeQuery("select * from ocjena_predmeta");
             while (setRezultata.next()) {
                 int id = setRezultata.getInt("id");
-                int predmetUSkoliId = setRezultata.getInt("predmet_u_skoli_id");
                 int ucenikId = setRezultata.getInt("ucenik_id");
+                int predmetUSkoliId = setRezultata.getInt("predmet_u_skoli_id");
                 int pitanjeId = setRezultata.getInt("pitanje_id");
                 int ocjena = setRezultata.getInt("ocjena");
-                new OcjenaPredmeta(id, predmetUSkoliId, ucenikId, pitanjeId, ocjena);
+                new OcjenaPredmeta(id, ucenikId, predmetUSkoliId, pitanjeId, ocjena);
             }
         } catch (Exception e) {
             e.printStackTrace();

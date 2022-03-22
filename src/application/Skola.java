@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Skola {
 	private int id;
 	private String naziv, grad, mjesto, drzava;
-	public static ArrayList<Skola> sveSkole = new ArrayList<>();
+	public static ArrayList<Skola> sveSkole = new ArrayList<Skola>();
 	
 	public Skola(int id, String naziv, String grad, String mjesto, String drzava) throws Exception {
 		this.id = id;
@@ -35,7 +35,32 @@ public class Skola {
 				return s;
 			}
 		}
+		System.err.println("Nije moguce pronaci skolu (Skola.getSkola)");
 		return null;
 	}
 	
+	public static String getNazivById(int id) {
+		for(Skola s : sveSkole) {
+			if(s.id == id) {
+				return s.naziv;
+			}
+		}
+		return null;
+	}
+	
+	public String getNaziv() {
+		return naziv;
+	}
+	
+	public String getGrad() {
+		return grad;
+	}
+	
+	public String getMjesto() {
+		return mjesto;
+	}
+	
+	public String getDrzava() {
+		return drzava;
+	}
 }
