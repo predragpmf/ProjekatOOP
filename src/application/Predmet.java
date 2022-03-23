@@ -41,4 +41,8 @@ public class Predmet {
 		return razred;
 	}
 	
+	public String getNaziv() {
+		return naziv;
+	}
+	
 }

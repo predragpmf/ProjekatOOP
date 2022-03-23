@@ -5,12 +5,12 @@ import java.util.Date;
 
 public class Ocjena {
 	private int id, ocjena;
-	private Date datum;
+	private String datum;
 	private Ucenik ucenik;
 	private PredmetUSkoli predmetUSkoli;
 	public static ArrayList<Ocjena> sveOcjene = new ArrayList<>();
 	
-	public Ocjena(int id, int ucenikId, int predmetUSkoliId, int ocjena, Date datum) {
+	public Ocjena(int id, int ucenikId, int predmetUSkoliId, int ocjena, String datum) {
 		this.id = id;
 		this.ucenik = Ucenik.getUcenik(ucenikId);
 		this.predmetUSkoli = PredmetUSkoli.getPredmetUSkoli(predmetUSkoliId);
@@ -19,6 +19,22 @@ public class Ocjena {
 		this.ocjena = ocjena;
 		this.datum = datum;
 		sveOcjene.add(this);
+		this.ucenik.ocjeneKorisnika.add(this);
 	}
 	
+	public Ucenik getUcenik() {
+		return ucenik;
+	}
+	
+	public String getDatum() {
+		return datum;
+	}
+	
+	public PredmetUSkoli getPredmetUSkoli() {
+		return predmetUSkoli;
+	}
+	
+	public int getOcjena() {
+		return ocjena;
+	}
 }

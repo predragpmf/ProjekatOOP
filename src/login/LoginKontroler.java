@@ -18,7 +18,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import application.PristupniPodaci;
-import application.Profesor;
 import application.Ucenik;
 import application.Korisnik;
 

@@ -11,6 +11,8 @@ public class Korisnik {
 	protected PristupniPodaci pristupniPodaci;
 	protected Skola skola;
 	protected int razred;
+	public ArrayList<Izostanci> sviIzostanci = new ArrayList<>();
+	public ArrayList<Ocjena> ocjeneKorisnika = new ArrayList<>();
 	public static ArrayList<Korisnik> sviKorisnici = new ArrayList<>();
 	public static Korisnik prijavljeniKorisnik;
 
@@ -40,6 +42,10 @@ public class Korisnik {
 	
 	public String getRazred() {
 		return Integer.toString(razred);
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 }

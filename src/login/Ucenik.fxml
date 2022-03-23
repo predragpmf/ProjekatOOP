@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -11,7 +13,7 @@
   <tabs>
     <Tab text="Informacije">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minWidth="-Infinity">
                <children>
                   <Text layoutX="45.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ime:" wrappingWidth="34.378000259399414">
                      <font>
@@ -48,12 +50,33 @@
     </Tab>
     <Tab text="Ocjene">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+               <children>
+                  <ChoiceBox fx:id="odaberiPredmet" layoutX="37.0" layoutY="428.0" prefWidth="150.0" />
+                  <Text layoutX="37.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Odaberi predmet:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Text>
+                  <TextArea fx:id="tekstVelikoPolje" layoutX="37.0" layoutY="60.0" prefHeight="313.0" prefWidth="255.0" />
+                  <Text layoutX="37.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spisak ocjena:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
       </content>
     </Tab>
       <Tab text="Izostanci">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+               <children>
+                  <Text layoutX="34.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spisak izostanaka:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextArea fx:id="tekstVelikoPolje2" layoutX="34.0" layoutY="71.0" prefHeight="286.0" prefWidth="260.0" />
+               </children></AnchorPane>
         </content>
       </Tab>
   </tabs>

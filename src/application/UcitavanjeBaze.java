@@ -115,7 +115,7 @@ public class UcitavanjeBaze {
                 int ucenikId = setRezultata.getInt("ucenik_id");
                 int predmetUSkoliId = setRezultata.getInt("predmet_u_skoli_id");
                 int ocjena = setRezultata.getInt("ocjena");
-                Date datum = setRezultata.getDate("datum");
+                String datum = setRezultata.getString("datum");
                 new Ocjena(id, ucenikId, predmetUSkoliId, ocjena, datum);
             }
         } catch (Exception e) {
@@ -164,7 +164,7 @@ public class UcitavanjeBaze {
                 int id = setRezultata.getInt("id");
                 int ucenikId = setRezultata.getInt("ucenik_id");
                 int predmetUSkoliId = setRezultata.getInt("predmet_u_skoli_id");
-                Date datum = setRezultata.getDate("datum");
+                String datum = setRezultata.getString("datum");
                 new Izostanci(id, ucenikId, predmetUSkoliId, datum);
             }
         } catch (Exception e) {
