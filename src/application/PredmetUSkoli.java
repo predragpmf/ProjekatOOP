@@ -14,6 +14,8 @@ public class PredmetUSkoli {
 		this.predmet = Predmet.getPredmet(predmetId);
 		this.profesor = Profesor.getProfesor(profesorId);
 		this.skola = Skola.getSkola(skolaId);
+		this.profesor.sveSkoleProfesor.add(skola);
+		this.profesor.predajePredmete.add(this);
 		sviPredmetiUSkoli.add(this);
 	}
 	

@@ -4,6 +4,8 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Korisnik {
 	protected int id, pol;
@@ -15,6 +17,9 @@ public class Korisnik {
 	public ArrayList<Ocjena> ocjeneKorisnika = new ArrayList<>();
 	public static ArrayList<Korisnik> sviKorisnici = new ArrayList<>();
 	public static Korisnik prijavljeniKorisnik;
+	
+	public Set<Skola> sveSkoleProfesor = new HashSet<>();
+	public ArrayList<PredmetUSkoli> predajePredmete = new ArrayList<>();
 
 	public int getPristupniPodaciId() {
 		return pristupniPodaci.getId();

@@ -1,20 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="login.ProfesorKontroler">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.ProfesorKontroler">
   <tabs>
-    <Tab text="Untitled Tab 1">
+    <Tab text="Informacije">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+               <children>
+                  <Text layoutX="45.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ime:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="imePolje" editable="false" layoutX="45.0" layoutY="69.0" prefHeight="26.0" prefWidth="400.0" />
+                  <Text layoutX="45.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prezime:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="prezimePolje" editable="false" layoutX="45.0" layoutY="138.0" prefHeight="26.0" prefWidth="400.0" />
+                  <TextArea fx:id="skolePolje" editable="false" layoutX="45.0" layoutY="231.0" prefHeight="200.0" prefWidth="250.0" />
+                  <TextArea fx:id="predmetiPolje" editable="false" layoutX="400.0" layoutY="231.0" prefHeight="200.0" prefWidth="250.0" />
+                  <Text layoutX="45.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Škole:" wrappingWidth="64.86000061035156">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="400.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Predmeti:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Untitled Tab 2">
+    <Tab text="Dodaj učenika">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="-Infinity" minWidth="-Infinity">
+               <children>
+                  <TextField fx:id="dodajUcenikaIme" layoutX="527.0" layoutY="75.0" />
+                  <TextField fx:id="dodajUcenikaPrezime" layoutX="527.0" layoutY="146.0" />
+                  <TextField fx:id="dodajUcenikaPol" layoutX="527.0" layoutY="214.0" />
+                  <TextField fx:id="dodajUcenikaKorisnickoIme" layoutX="527.0" layoutY="287.0" />
+                  <TextField fx:id="dodajUcenikaEmail" layoutX="527.0" layoutY="362.0" />
+                  <Text layoutX="527.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ime:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="527.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prezime:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="527.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pol">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="527.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Korisničko ime:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="527.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextArea fx:id="sviUceniciPolje" editable="false" layoutX="43.0" layoutY="68.0" prefHeight="447.0" prefWidth="342.0" />
+                  <Text layoutX="43.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Svi učenici:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="dodajUcenikeTipka" layoutX="578.0" layoutY="422.0" mnemonicParsing="false" text="Dodaj" />
+               </children></AnchorPane>
       </content>
     </Tab>
+      <Tab text="Dodaj predmet">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="472.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Naziv predmeta:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="dodajNazivPredmeta" layoutX="472.0" layoutY="154.0" prefHeight="26.0" prefWidth="225.0" />
+                  <Text layoutX="472.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Razred:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="dodajRazredPredmeta" layoutX="472.0" layoutY="242.0" prefHeight="26.0" prefWidth="223.0" />
+                  <Button fx:id="dodajPredmetTipka" layoutX="554.0" layoutY="309.0" mnemonicParsing="false" text="Dodaj" />
+                  <TextArea fx:id="sviPredmetiPolje" layoutX="49.0" layoutY="65.0" prefHeight="464.0" prefWidth="328.0" />
+                  <Text layoutX="49.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Svi predmeti:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Dodaj školu">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="Dodaj profesora">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
   </tabs>
 </TabPane>

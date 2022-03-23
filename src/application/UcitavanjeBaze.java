@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.Date;
 
 public class UcitavanjeBaze {
-	private static BazaPodataka db = new BazaPodataka();
+	public static BazaPodataka db = new BazaPodataka();
 	
 	public static void ucitavanje() {
         db.uspostaviVezu();
@@ -22,7 +22,7 @@ public class UcitavanjeBaze {
         ucitajOcjene();
         ucitajIzostanke();
         ucitajOcjenePredmeta();
-        db.prekidVeze();
+        //db.prekidVeze();
         System.out.println("Ucitavanje baze zavrseno!");
     }
 	
