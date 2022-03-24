@@ -5,6 +5,8 @@ package login;
 
 import java.io.IOException;
 
+import application.BazaPodataka;
+import application.UcitavanjeBaze;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,6 +39,11 @@ public class LoginWindow extends Application{
 		loginStage.setTitle("Prijava");
 		loginStage.setScene(scene);
 		loginStage.show();
+		primaryStage.setOnCloseRequest(e -> {
+	         System.out.println("Prekid veze sa bazom podataka!");
+	         BazaPodataka db = UcitavanjeBaze.db;
+	         db.prekidVeze();
+	      });
 	}
 	
 	public static void main(String[] args) {

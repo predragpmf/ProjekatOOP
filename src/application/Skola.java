@@ -63,4 +63,8 @@ public class Skola {
 	public String getDrzava() {
 		return drzava;
 	}
+	
+	public int getId() {
+		return id;
+	}
 }

@@ -78,7 +78,7 @@ public class LoginKontroler implements Initializable {
 		});
 	}
 	
-	private String hesirajLozinku(String lozinka) {
+	public static String hesirajLozinku(String lozinka) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			byte[] messageDigest = md.digest(lozinka.getBytes());

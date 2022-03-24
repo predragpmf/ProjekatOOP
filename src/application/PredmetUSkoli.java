@@ -36,4 +36,12 @@ public class PredmetUSkoli {
 	public Predmet getPredmet() {
 		return predmet;
 	}
+	
+	public Profesor getProfesor() {
+		return profesor;
+	}
+	
+	public int getId() {
+		return id;
+	}
 }

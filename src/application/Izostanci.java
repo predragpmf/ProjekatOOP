@@ -27,4 +27,8 @@ public class Izostanci {
 		return predmetUSkoli;
 	}
 	
+	public Ucenik getUcenik() {
+		return ucenik;
+	}
+	
 }

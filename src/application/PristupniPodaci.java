@@ -20,7 +20,7 @@ public class PristupniPodaci {
 		}
 	}
 	
-	private boolean pristupniPodaciPostoje(PristupniPodaci podaci) {
+	public static boolean pristupniPodaciPostoje(PristupniPodaci podaci) {
         for (PristupniPodaci pp : sviPristupniPodaci) {
             if (pp.korisnickoIme.equals(podaci.korisnickoIme) || pp.email.equals(podaci.email)) {
                 return true;

@@ -45,4 +45,8 @@ public class Predmet {
 		return naziv;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 }
