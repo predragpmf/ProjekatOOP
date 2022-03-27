@@ -17,5 +17,25 @@ public class OcjenaPredmeta {
 		this.ocjena = ocjena;
 		sveOcjenePredmeta.add(this);
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getOcjena() {
+		return ocjena;
+	}
+
+	public Ucenik getUcenik() {
+		return ucenik;
+	}
+
+	public PredmetUSkoli getPredmetUSkoli() {
+		return predmetUSkoli;
+	}
+
+	public Pitanje getPitanje() {
+		return pitanje;
+	}
 	
 }

@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Izostanci {
 	private int id;
@@ -29,6 +28,10 @@ public class Izostanci {
 	
 	public Ucenik getUcenik() {
 		return ucenik;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 }

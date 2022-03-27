@@ -13,13 +13,16 @@ public class Korisnik {
 	protected PristupniPodaci pristupniPodaci;
 	protected Skola skola;
 	protected int razred;
+	
 	public ArrayList<Izostanci> sviIzostanci = new ArrayList<>();
 	public ArrayList<Ocjena> ocjeneKorisnika = new ArrayList<>();
+	public ArrayList<PredmetUSkoli> predajePredmete = new ArrayList<>();
+	
 	public static ArrayList<Korisnik> sviKorisnici = new ArrayList<>();
 	public static Korisnik prijavljeniKorisnik;
 	
 	public Set<Skola> sveSkoleProfesor = new HashSet<>();
-	public ArrayList<PredmetUSkoli> predajePredmete = new ArrayList<>();
+	
 
 	public int getPristupniPodaciId() {
 		return pristupniPodaci.getId();

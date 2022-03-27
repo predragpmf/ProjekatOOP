@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Ocjena {
 	private int id, ocjena;
@@ -36,5 +35,9 @@ public class Ocjena {
 	
 	public int getOcjena() {
 		return ocjena;
+	}
+
+	public int getId() {
+		return id;
 	}
 }

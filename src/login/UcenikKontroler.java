@@ -19,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class UcenikKontroler implements Initializable {
+	
 	@FXML
     private TextField imePolje;
 	@FXML
@@ -39,14 +40,30 @@ public class UcenikKontroler implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		// Informacije o uceniku:
+		ispisiInfo();
+		
+		// Ocjene:
+		ispisiOcjene();
+		
+		// Izostanci:
+		ispisiIzostanke();
+
+	}
+	
+	private void ispisiInfo() {
+		
 		imePolje.setText(Korisnik.prijavljeniKorisnik.getIme());
 		prezimePolje.setText(Korisnik.prijavljeniKorisnik.getPrezime());
 		polPolje.setText(Korisnik.prijavljeniKorisnik.getPol());
 		skolaPolje.setText(Korisnik.prijavljeniKorisnik.getSkola());
 		razredPolje.setText(Korisnik.prijavljeniKorisnik.getRazred());
 		
-		// Ocjene:
+	}
+	
+	private void ispisiOcjene() {
+		
 		Collections.sort(Korisnik.prijavljeniKorisnik.ocjeneKorisnika, new Sortiranje());
 		Set<String> ocjene = new HashSet<>();
 		for(Ocjena o : Korisnik.prijavljeniKorisnik.ocjeneKorisnika) {
@@ -71,12 +88,15 @@ public class UcenikKontroler implements Initializable {
 		    //System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
 		    //System.out.println("   ComboBox.getValue(): " + odaberiPredmet.getValue());
 		});
-		// Izostanci:
+		
+	}
+	
+	private void ispisiIzostanke() {
+		
 		for(Izostanci i : Korisnik.prijavljeniKorisnik.sviIzostanci) {
 			tekstVelikoPolje2.appendText(i.getDatum() + ", " + i.getPredmetUSkoli().getPredmet().getNaziv() + "\n");
 		}
-
-
+		
 	}
 	
 }

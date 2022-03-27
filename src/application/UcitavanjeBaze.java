@@ -5,7 +5,6 @@ package application;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Date;
 
 public class UcitavanjeBaze {
 	public static BazaPodataka db = new BazaPodataka();
@@ -22,7 +21,6 @@ public class UcitavanjeBaze {
         ucitajOcjene();
         ucitajIzostanke();
         ucitajOcjenePredmeta();
-        //db.prekidVeze();
         System.out.println("Ucitavanje baze zavrseno!");
     }
 	

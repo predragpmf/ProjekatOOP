@@ -4,7 +4,6 @@
 package login;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -107,22 +106,36 @@ public class ProfesorKontroler implements Initializable{
 	@FXML
 	private ChoiceBox<String> odaberiSkolOcjBox;
 	
-	public String nazivIMjesto;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		// Informacije o profesoru:
-		imePolje.setText(Korisnik.prijavljeniKorisnik.getIme());
-		prezimePolje.setText(Korisnik.prijavljeniKorisnik.getPrezime());
-		for(Skola s : Korisnik.prijavljeniKorisnik.sveSkoleProfesor) {
-			skolePolje.appendText(s.getNaziv() + "\n");
-		}
-		for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
-			predmetiPolje.appendText(pus.getSkola().getNaziv() + ", " + pus.getPredmet().getNaziv() + "\n");
-		}
+		// Informacije o profesoru tab:
+		ispisiInfo();
 		
-		// Dodaj novog ucenika:
+		// Dodaj novog ucenika tab:
+		dodajUcenika();
+		
+		// Dodaj novi predmet tab:
+		dodajPredmet();
+		
+		// Dodaj novu skolu tab:
+		dodajSkolu();
+		
+		// Dodaj novog profesora tab:
+		dodajProfesora();
+		
+		// Predavanje tab:
+		dodajPredavanje();
+		
+		//Ocjenjivanje tab:
+		dodajOcjenu();
+				
+	}
+	
+	
+	private void dodajUcenika() {
+		
 		ispisiKorisnike("Ucenik");
 		dodajUcenikeTipka.setOnAction(event -> {
 			String ime = dodajUcenikaIme.getText();
@@ -137,11 +150,9 @@ public class ProfesorKontroler implements Initializable{
 				pol = -1;
 			}
 			String korisnickoIme = dodajUcenikaKorisnickoIme.getText();
-			for(PristupniPodaci pp : PristupniPodaci.sviPristupniPodaci) {
-				if(pp.getKorisnickoIme().equals(korisnickoIme)) {
-					obavjestenjeProzor("Korisnicko ime vec postoji!");
-					return;
-				}
+			if(PristupniPodaci.korisnickoImePostoji(korisnickoIme)) {
+				obavjestenjeProzor("Korisnicko ime vec postoji!");
+				return;
 			}
 			String lozinka = korisnickoIme.concat("123");
 			String email = dodajUcenikaEmail.getText();
@@ -156,11 +167,19 @@ public class ProfesorKontroler implements Initializable{
 				System.err.println("Ucenik vec postoji!");
 				e.printStackTrace();
 			}
+			dodajUcenikaIme.clear();
+			dodajUcenikaPrezime.clear();
+			dodajUcenikaPol.clear();
+			dodajUcenikaKorisnickoIme.clear();
+			dodajUcenikaEmail.clear();
 			sviUceniciPolje.clear();
 			ispisiKorisnike("Ucenik");
 		});
 		
-		// Dodaj novi predmet:
+	}
+	
+	private void dodajPredmet() {
+		
 		ispisiPredmete();
 		dodajPredmetTipka.setOnAction(event -> {
 			String naziv = dodajNazivPredmeta.getText();
@@ -183,9 +202,13 @@ public class ProfesorKontroler implements Initializable{
 			odaberiPredOcjBox.getItems().addAll(naziviPredmeta);
 		});
 		
-		// Dodaj novu skolu:
+	}
+	
+	
+	private void dodajSkolu() {
+		
 		for(Skola s : Skola.sveSkole) {
-			sveSkolePolje.appendText(s.getNaziv() + ", " + s.getGrad() + ", " + s.getMjesto() + "\n");
+			sveSkolePolje.appendText(s.ispisSkole(s) + "\n");
 		}
 		dodajSkoluTipka.setOnAction(event -> {
 			String naziv = nazivSkolePolje.getText();
@@ -205,7 +228,11 @@ public class ProfesorKontroler implements Initializable{
 			}
 		});
 		
-		// Dodaj novog profesora:
+	}
+	
+	
+	private void dodajProfesora() {
+		
 		ispisiKorisnike("Profesor");
 		dodajProfesoraTipka.setOnAction(event -> {
 			String ime = imeProfesoraPolje.getText();
@@ -237,9 +264,13 @@ public class ProfesorKontroler implements Initializable{
 			ispisiKorisnike("Profesor");
 		});
 		
-		// Dodaj novi predmet profesora:
+	}
+	
+	
+	private void dodajPredavanje() {
+		
 		for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
-			sviPredmetiProfesora.appendText(pus.getPredmet().getNaziv() + ", " + pus.getSkola().getNaziv() + "\n");
+			sviPredmetiProfesora.appendText(pus.getPredmet().getNaziv() + ", " + pus.getSkola().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
 		}
 		
 		// Dodaj predmete u ChoiceBox:
@@ -284,121 +315,108 @@ public class ProfesorKontroler implements Initializable{
 			}
 		});
 		
-		//Ocjenjivanje:
-		for(Skola s : Skola.sveSkole) {
-			odaberiSkolOcjBox.getItems().add(s.getNaziv() + "," + s.getMjesto());
+	}
+	
+	
+	private void dodajOcjenu() {
+		
+		for(Skola s : Korisnik.prijavljeniKorisnik.sveSkoleProfesor) {
+			odaberiSkolOcjBox.getItems().add(s.getNaziv() + "," + s.getMjesto() + "," + s.getDrzava());
 		}
-		
-		
+		for(int i = 1; i <= 5; i++) {
+			odaberiOcjBox.getItems().add(Integer.toString(i));
+		}
+
 		odaberiSkolOcjBox.setOnAction((event) -> {
 			odaberiPredOcjBox.getItems().clear();
-			Set<String> setPredmeta = new HashSet<>();
-			nazivIMjesto = odaberiSkolOcjBox.getValue();
-			System.out.println(nazivIMjesto);
-			String nazivSkole = nazivIMjesto.split(",")[0];
-			String mjestoSkole = nazivIMjesto.split(",")[1];
-			for(PredmetUSkoli pus : PredmetUSkoli.sviPredmetiUSkoli) {
-				if(pus.getSkola().getNaziv().equals(nazivSkole) && pus.getSkola().getMjesto().equals(mjestoSkole)) {
-					setPredmeta.add(pus.getPredmet().getNaziv());
+			String nazivIMjesto = odaberiSkolOcjBox.getValue();
+			String naziv = nazivIMjesto.split(",")[0];
+			String mjesto = nazivIMjesto.split(",")[1];
+			String drzava = nazivIMjesto.split(",")[2];
+			for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
+				if(pus.getSkola().getNaziv().equals(naziv) && pus.getSkola().getMjesto().equals(mjesto) && pus.getSkola().getDrzava().equals(drzava)) {
+					odaberiPredOcjBox.getItems().add(pus.getPredmet().getNaziv() + "," + pus.getPredmet().getRazred());
 				}
 			}
-			odaberiPredOcjBox.getItems().addAll(setPredmeta);
 		});
-		/*
-		for(Skola s : Skola.sveSkole) {
-			if(ProfesorKontroler.nazivOdabraneSkole[0].equals(s.getNaziv()) && nazivOdabraneSkole[1].stripLeading().equals(s.getMjesto())) {
-				idOdabraneSkole = s.getId();
-			}
-		}
-		Set<String> setSkola = new HashSet<>();
-		for(PredmetUSkoli pus : PredmetUSkoli.sviPredmetiUSkoli) {
-			if(pus.getSkola().getId() == idOdabraneSkole) {
-				setSkola.add(pus.getPredmet().getNaziv());
-			}
-		}
-		*/
 		
 		odaberiPredOcjBox.setOnAction((event) -> {
-			//nazivSkole = nazivIMjesto[0];
-			//String mjestoSkole = nazivIMjesto[1];
-			//for(Skola s : Skola.sveSkole) {
-			//	if(s.getNaziv().equals(nazivSkole) && s.getMjesto().equals(mjestoSkole)) {
-			//		idSkole = s.getId();
-			//	}
-			//}
-			
 			odaberiUcenOcjBox.getItems().clear();
-			String nazivOdabranogPredmeta = (String) odaberiPredOcjBox.getValue();
-			Set<String> setUcenika = new HashSet<>();
+			String nazivIRazred = odaberiPredOcjBox.getValue();
+			String naziv = nazivIRazred.split(",")[0];
+			int razred = Integer.parseInt(nazivIRazred.split(",")[1]);
+			Set<Ucenik> ucenici = new HashSet<>();
 			for(Ocjena o : Ocjena.sveOcjene) {
-				if(o.getPredmetUSkoli().getPredmet().getNaziv().equals(nazivOdabranogPredmeta) && o.getPredmetUSkoli().getProfesor().getId() == Korisnik.prijavljeniKorisnik.getId()) {
-					setUcenika.add(o.getUcenik().getPristupniPodaci().getKorisnickoIme());
+				if(o.getPredmetUSkoli().getPredmet().getNaziv().equals(naziv) && o.getPredmetUSkoli().getPredmet().getRazred() == razred) {
+					ucenici.add(o.getUcenik());
 				}
 			}
 			for(Izostanci i : Izostanci.sviIzostanci) {
-				if(i.getPredmetUSkoli().getPredmet().getNaziv().equals(nazivOdabranogPredmeta) && i.getPredmetUSkoli().getProfesor().getId() == Korisnik.prijavljeniKorisnik.getId()) {
-					setUcenika.add(i.getUcenik().getPristupniPodaci().getKorisnickoIme());
+				if(i.getPredmetUSkoli().getPredmet().getNaziv().equals(naziv) && i.getPredmetUSkoli().getPredmet().getRazred() == razred) {
+					ucenici.add(i.getUcenik());
 				}
 			}
-			odaberiUcenOcjBox.getItems().addAll(setUcenika);
+			for(Ucenik u : ucenici) {
+				odaberiUcenOcjBox.getItems().add(u.getPristupniPodaci().getKorisnickoIme());
+			}
 		});
+		
 		odaberiUcenOcjBox.setOnAction((event) -> {
+			//boolean skolaPrazna = odaberiSkolOcjBox.getSelectionModel().isEmpty();
+			//boolean predmetPrazan = odaberiPredOcjBox.getSelectionModel().isEmpty();
+			
+			sveOcjeneUcenika.clear();
 			String korisnickoIme = odaberiUcenOcjBox.getValue();
-			for(Ocjena o: Ocjena.sveOcjene) {
+			for(Ocjena o : Ocjena.sveOcjene) {
 				if(o.getUcenik().getPristupniPodaci().getKorisnickoIme().equals(korisnickoIme)) {
-					sveOcjeneUcenika.appendText(o.getPredmetUSkoli().getPredmet().getNaziv() + ", " + o.getOcjena() + "\n");
+					sveOcjeneUcenika.appendText(o.getDatum() + " : " + o.getOcjena() + "\n");
 				}
 			}
 		});
 		
-		for(int i = 1; i < 6; i++) {
-			odaberiOcjBox.getItems().add(Integer.toString(i));
-		}
-		ocjeniUcenikaTipka.setOnAction((event) -> {
-			String skolaNaziv = odaberiSkolOcjBox.getValue().split(",")[0];
-			String skolaMjesto = odaberiSkolOcjBox.getValue().split(",")[1];
-			String ucenik = odaberiUcenOcjBox.getValue();
-			int idSkola = 0;
-			int idPredmet = 0;
-			int idPredmetUSkoli = 0;
-			int idUcenik = 0;
-			String predmet = odaberiPredOcjBox.getValue();
+		ocjeniUcenikaTipka.setOnAction(event -> {
+			int idUcenika = 0;
+			int idPredmetaUSkoli = 0;
+			String nazivPredmeta = odaberiPredOcjBox.getValue().split(",")[0];
+			int razredPredmeta = Integer.parseInt(odaberiPredOcjBox.getValue().split(",")[1]);
+			String nazivSkole = odaberiSkolOcjBox.getValue().split(",")[0];
+			String mjestoSkole = odaberiSkolOcjBox.getValue().split(",")[1];
 			int ocjena = Integer.parseInt(odaberiOcjBox.getValue());
 			long mili = System.currentTimeMillis();  
 		    java.sql.Date datum = new java.sql.Date(mili);
-		    for(Skola s : Skola.sveSkole) {
-		    	if(s.getNaziv().equals(skolaNaziv) && s.getMjesto().equals(skolaMjesto)) {
-		    		idSkola = s.getId();
-		    	}
-		    }
-		    for(Predmet p : Predmet.sviPredmeti) {
-		    	if(p.getNaziv().equals(predmet)) {
-		    		idPredmet = p.getId();
-		    	}
-		    }
-		    for(PredmetUSkoli pus : PredmetUSkoli.sviPredmetiUSkoli) {
-		    	if(pus.getPredmet().getId() == idPredmet && pus.getSkola().getId() == idSkola && pus.getProfesor().getId() == Korisnik.prijavljeniKorisnik.getId()) {
-		    		idPredmetUSkoli = pus.getId();
-		    	}
-		    }
-		    for(Ucenik u : Ucenik.sviUcenici) {
-		    	if(u.getPristupniPodaci().getKorisnickoIme().equals(ucenik)) {
-		    		idUcenik = u.getId();
-		    	}
-		    }
-		    int ocjenaid = IzmjenaBaze.posaljiOcjena(idUcenik, idPredmetUSkoli, ocjena, datum);
-		    new Ocjena(ocjenaid, idUcenik, idPredmetUSkoli, ocjena, datum.toString());
-		    sveOcjeneUcenika.clear();
-		    for(Ocjena o: Ocjena.sveOcjene) {
-				if(o.getUcenik().getPristupniPodaci().getKorisnickoIme().equals(ucenik)) {
-					sveOcjeneUcenika.appendText(o.getPredmetUSkoli().getPredmet().getNaziv() + ", " + o.getOcjena() + "\n");
+			for(Ucenik u : Ucenik.sviUcenici) {
+				if(u.getPristupniPodaci().getKorisnickoIme().equals(odaberiUcenOcjBox.getValue())) {
+					idUcenika = u.getId();
 				}
 			}
+			for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
+				if(pus.getPredmet().getNaziv().equals(nazivPredmeta) && pus.getPredmet().getRazred() == razredPredmeta  && pus.getSkola().getNaziv().equals(nazivSkole) && pus.getSkola().getMjesto().equals(mjestoSkole)) {
+					idPredmetaUSkoli = pus.getId();
+				}
+			}
+			int idOcjene = IzmjenaBaze.posaljiOcjena(idUcenika, idPredmetaUSkoli, ocjena, datum);
+			new Ocjena(idOcjene, idUcenika, idPredmetaUSkoli, ocjena, datum.toString());
 		});
-				
+		
 	}
 	
+	
+	private void ispisiInfo() {
+		
+		imePolje.setText(Korisnik.prijavljeniKorisnik.getIme());
+		prezimePolje.setText(Korisnik.prijavljeniKorisnik.getPrezime());
+		for(Skola s : Korisnik.prijavljeniKorisnik.sveSkoleProfesor) {
+			skolePolje.appendText(s.getNaziv() + "\n");
+		}
+		for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
+			predmetiPolje.appendText(pus.getSkola().getNaziv() + ", " + pus.getPredmet().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
+		}
+		
+	}
+	
+	
 	private void ispisiKorisnike(String tip) {
+		
 		if(tip.equals("Ucenik")) {
 			for(Korisnik k : Korisnik.sviKorisnici) {
 				if(k instanceof Ucenik) {
@@ -412,25 +430,27 @@ public class ProfesorKontroler implements Initializable{
 				} 
 			}
 		}
+		
 	}
+	
 	
 	private void ispisiPredmete() {
-		Set<String> naziviPredmeta = new HashSet<>();
+		
 		for(Predmet p : Predmet.sviPredmeti) {
-			naziviPredmeta.add(p.getNaziv());
+			sviPredmetiPolje.appendText(p.getNaziv() + ", " + p.getRazred() + "\n");
 		}
-		for(String np : naziviPredmeta) {
-			sviPredmetiPolje.appendText(np + "\n");
-		}
+		
 	}
 	
+	
 	private void obavjestenjeProzor(String poruka) {
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Greška!");
         alert.setHeaderText(null);
         alert.setContentText(poruka);
         alert.showAndWait();
+        
 	}
-	
 
 }

@@ -48,6 +48,20 @@ public class Skola {
 		return null;
 	}
 	
+	public static Skola getByNazivIMjesto(String naziv, String mjesto) {
+		for(Skola s : sveSkole) {
+			if(s.getNaziv().equals(naziv) && s.getMjesto().equals(mjesto)) {
+				return s;
+			}
+		}
+		System.err.println("Skola nije pronadjena (Skola.getByNazivIMjesto()");
+		return null;
+	}
+	
+	public String ispisSkole(Skola s) {
+		return s.getNaziv() + ", " + s.getGrad() + ", " + s.getMjesto() + ", " + s.getDrzava();
+	}
+	
 	public String getNaziv() {
 		return naziv;
 	}

@@ -33,19 +33,29 @@ public class LoginKontroler implements Initializable {
     private MenuItem exitMeni;
     @FXML
     private MenuItem aboutMeni;
+    
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		// File -> Exit:
 		exitMeni.setOnAction(event -> {
 			System.exit(0);
 		});
+		
+		// Help -> About:
 		aboutMeni.setOnAction(event -> {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("About");
-			alert.setHeaderText("OOP projekat");
-			alert.setContentText("v1.0");
-			alert.showAndWait();
+			obavjestenjeProzor("About", "OOP projekat", "v1.0");
 		});
+		
+		// Prijava tipka:
+		prijaviSeTipka();
+		
+	}
+	
+	
+	private void prijaviSeTipka() {
+		
 		prijavaTipka.setOnAction(event -> {
             String korisnickoIme = korisnikUnos.getText().strip();
             String lozinka = lozinkaUnos.getText().strip();
@@ -69,16 +79,22 @@ public class LoginKontroler implements Initializable {
                 			}
                 		}
             		}
-            		obavjestenjeProzor("Pogrešna loznika!");
+            		obavjestenjeProzor("Greska!", null, "Pogrešna loznika!");
+                    lozinkaUnos.clear();
             		return;
 				}
             	
             }
-            obavjestenjeProzor("Korisnik ne postoji!");
+            obavjestenjeProzor("Greska!", null, "Korisnik ne postoji!");
+            korisnikUnos.clear();
+            lozinkaUnos.clear();
 		});
+		
 	}
 	
+
 	public static String hesirajLozinku(String lozinka) {
+		
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			byte[] messageDigest = md.digest(lozinka.getBytes());
@@ -92,16 +108,17 @@ public class LoginKontroler implements Initializable {
 			e.printStackTrace();
 			return null;
 		}
+		
 	}
 	
-	private void obavjestenjeProzor(String poruka) {
+	
+	private void obavjestenjeProzor(String naslov, String zaglavlje, String sadrzaj) {
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Greška!");
-        alert.setHeaderText(null);
-        alert.setContentText(poruka);
-        korisnikUnos.clear();
-        lozinkaUnos.clear();
+        alert.setTitle(naslov);
+        alert.setHeaderText(zaglavlje);
+        alert.setContentText(sadrzaj);
         alert.showAndWait();
+        
 	}
-	
 }
