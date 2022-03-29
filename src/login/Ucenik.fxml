@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -45,6 +46,7 @@
                      </font>
                   </Text>
                   <TextField fx:id="razredPolje" editable="false" layoutX="45.0" layoutY="345.0" prefHeight="26.0" prefWidth="400.0" />
+                  <Button fx:id="odjaviSeTipka" layoutX="650.0" layoutY="498.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="104.0" text="Odjavi se" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -57,7 +59,7 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Text>
-                  <TextArea fx:id="tekstVelikoPolje" layoutX="37.0" layoutY="60.0" prefHeight="313.0" prefWidth="255.0" />
+                  <TextArea fx:id="tekstVelikoPolje" editable="false" layoutX="37.0" layoutY="60.0" prefHeight="313.0" prefWidth="255.0" />
                   <Text layoutX="37.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spisak ocjena:">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -75,8 +77,37 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="tekstVelikoPolje2" layoutX="34.0" layoutY="71.0" prefHeight="286.0" prefWidth="260.0" />
+                  <TextArea fx:id="tekstVelikoPolje2" editable="false" layoutX="34.0" layoutY="71.0" prefHeight="286.0" prefWidth="260.0" />
                </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Profesor">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ChoiceBox fx:id="odaberiPredProfBox" layoutX="46.0" layoutY="80.0" prefWidth="150.0" />
+                  <Text layoutX="46.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Odaberi predmet:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="46.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profesor:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="profPredPolje" editable="false" layoutX="46.0" layoutY="185.0" />
+                  <Text layoutX="328.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Nastava se održava redovno:" />
+                  <Text layoutX="328.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Nastavnik se ponaša korektno prema učenicima:" />
+                  <Text layoutX="328.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Nastavnik predaje na zanimljiv način:" />
+                  <Text layoutX="328.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4. Nastavnik stvara ugodnu atmosferu na predavanjima:" />
+                  <TextField fx:id="pitanjePrvo" layoutX="343.0" layoutY="87.0" prefHeight="26.0" prefWidth="58.0" />
+                  <TextField fx:id="pitanjeDrugo" layoutX="343.0" layoutY="172.0" prefHeight="26.0" prefWidth="58.0" />
+                  <TextField fx:id="pitanjeTrece" layoutX="343.0" layoutY="259.0" prefHeight="26.0" prefWidth="58.0" />
+                  <TextField fx:id="pitanjeCetvrto" layoutX="343.0" layoutY="344.0" prefHeight="26.0" prefWidth="58.0" />
+                  <Button fx:id="ocjeniProf" layoutX="453.0" layoutY="390.0" mnemonicParsing="false" text="Ocjeni" />
+               </children>
+            </AnchorPane>
         </content>
       </Tab>
   </tabs>

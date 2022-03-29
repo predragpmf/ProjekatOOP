@@ -137,4 +137,40 @@ public class IzmjenaBaze {
 		return id;
     }
 	
+	public static int posaljiIzostanak(int ucenikId, int predmetUSkoliId, Date datum) {
+		int id = 0;
+		try {
+			String upit = "INSERT INTO izostanci(ucenik_id, predmet_u_skoli_id, datum)  VALUES (?,?,?)";
+			PreparedStatement izjava = db.getVeza().prepareStatement(upit, PreparedStatement.RETURN_GENERATED_KEYS);
+			izjava.setInt(1, ucenikId);
+	        izjava.setInt(2, predmetUSkoliId);
+	        izjava.setDate(3, datum);
+	        izjava.executeUpdate();
+            ResultSet rs = izjava.getGeneratedKeys();
+            rs.next();
+            id = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+    }
+	
+	public static int posaljiOcjenuPredmeta(int ucenikId, int predmetUSkoliId, int pitanjeId, int ocjena) {
+		int id = 0;
+		try {
+			String upit = "INSERT INTO ocjena_predmeta(ucenik_id, predmet_u_skoli_id, pitanje_id, ocjena)  VALUES (?,?,?,?)";
+			PreparedStatement izjava = db.getVeza().prepareStatement(upit, PreparedStatement.RETURN_GENERATED_KEYS);
+			izjava.setInt(1, ucenikId);
+	        izjava.setInt(2, predmetUSkoliId);
+	        izjava.setInt(3, pitanjeId);
+	        izjava.setInt(4, ocjena);
+	        izjava.executeUpdate();
+            ResultSet rs = izjava.getGeneratedKeys();
+            rs.next();
+            id = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+    }
 }

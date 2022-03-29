@@ -4,6 +4,8 @@
 package login;
 
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -23,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -82,6 +85,8 @@ public class ProfesorKontroler implements Initializable{
 	@FXML
 	private TextArea sveOcjeneUcenika;
 	@FXML
+	private TextArea sviIzostanciUcenika;
+	@FXML
 	private Button dodajUcenikeTipka;
 	@FXML
 	private Button dodajPredmetTipka;
@@ -94,6 +99,10 @@ public class ProfesorKontroler implements Initializable{
 	@FXML
 	private Button ocjeniUcenikaTipka;
 	@FXML
+	private Button izostanakTipka;
+	@FXML
+	private Button odjaviSeTipkaProf;
+	@FXML
 	private ChoiceBox<String> predmetProfesoraBox;
 	@FXML
 	private ChoiceBox<String> skolaProfesoraBox;
@@ -105,7 +114,8 @@ public class ProfesorKontroler implements Initializable{
 	private ChoiceBox<String> odaberiOcjBox;
 	@FXML
 	private ChoiceBox<String> odaberiSkolOcjBox;
-	
+	@FXML
+	private DatePicker odaberiDatum;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -326,6 +336,7 @@ public class ProfesorKontroler implements Initializable{
 		for(int i = 1; i <= 5; i++) {
 			odaberiOcjBox.getItems().add(Integer.toString(i));
 		}
+		odaberiDatum.setValue(LocalDate.now());
 
 		odaberiSkolOcjBox.setOnAction((event) -> {
 			odaberiPredOcjBox.getItems().clear();
@@ -372,6 +383,12 @@ public class ProfesorKontroler implements Initializable{
 					sveOcjeneUcenika.appendText(o.getDatum() + " : " + o.getOcjena() + "\n");
 				}
 			}
+			sviIzostanciUcenika.clear();
+			for(Izostanci i : Izostanci.sviIzostanci) {
+				if(i.getUcenik().getPristupniPodaci().getKorisnickoIme().equals(korisnickoIme)) {
+					sviIzostanciUcenika.appendText(i.getDatum() + " : " + i.getPredmetUSkoli().getPredmet().getNaziv() + "\n");
+				}
+			}
 		});
 		
 		ocjeniUcenikaTipka.setOnAction(event -> {
@@ -381,9 +398,11 @@ public class ProfesorKontroler implements Initializable{
 			int razredPredmeta = Integer.parseInt(odaberiPredOcjBox.getValue().split(",")[1]);
 			String nazivSkole = odaberiSkolOcjBox.getValue().split(",")[0];
 			String mjestoSkole = odaberiSkolOcjBox.getValue().split(",")[1];
+			LocalDate vrijednostDatuma = odaberiDatum.getValue();
+			java.sql.Date datum = Date.valueOf(vrijednostDatuma);
 			int ocjena = Integer.parseInt(odaberiOcjBox.getValue());
-			long mili = System.currentTimeMillis();  
-		    java.sql.Date datum = new java.sql.Date(mili);
+			//long mili = System.currentTimeMillis();  
+		    //java.sql.Date datum = new java.sql.Date(mili);
 			for(Ucenik u : Ucenik.sviUcenici) {
 				if(u.getPristupniPodaci().getKorisnickoIme().equals(odaberiUcenOcjBox.getValue())) {
 					idUcenika = u.getId();
@@ -396,6 +415,47 @@ public class ProfesorKontroler implements Initializable{
 			}
 			int idOcjene = IzmjenaBaze.posaljiOcjena(idUcenika, idPredmetaUSkoli, ocjena, datum);
 			new Ocjena(idOcjene, idUcenika, idPredmetaUSkoli, ocjena, datum.toString());
+			
+			sveOcjeneUcenika.clear();
+			for(Ocjena o : Ocjena.sveOcjene) {
+				if(o.getUcenik().getPristupniPodaci().getKorisnickoIme().equals(odaberiUcenOcjBox.getValue())) {
+					sveOcjeneUcenika.appendText(o.getDatum() + " : " + o.getOcjena() + "\n");
+				}
+			}
+			
+		});
+		
+		izostanakTipka.setOnAction(event -> {
+			int idUcenika = 0;
+			int idPredmetaUSkoli = 0;
+			String nazivPredmeta = odaberiPredOcjBox.getValue().split(",")[0];
+			int razredPredmeta = Integer.parseInt(odaberiPredOcjBox.getValue().split(",")[1]);
+			String nazivSkole = odaberiSkolOcjBox.getValue().split(",")[0];
+			String mjestoSkole = odaberiSkolOcjBox.getValue().split(",")[1];
+			LocalDate vrijednostDatuma = odaberiDatum.getValue();
+			java.sql.Date datum = Date.valueOf(vrijednostDatuma);
+			
+			for(Ucenik u : Ucenik.sviUcenici) {
+				if(u.getPristupniPodaci().getKorisnickoIme().equals(odaberiUcenOcjBox.getValue())) {
+					idUcenika = u.getId();
+				}
+			}
+			
+			for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
+				if(pus.getPredmet().getNaziv().equals(nazivPredmeta) && pus.getPredmet().getRazred() == razredPredmeta  && pus.getSkola().getNaziv().equals(nazivSkole) && pus.getSkola().getMjesto().equals(mjestoSkole)) {
+					idPredmetaUSkoli = pus.getId();
+				}
+			}
+			
+			int idIzostanka = IzmjenaBaze.posaljiIzostanak(idUcenika, idPredmetaUSkoli, datum);
+			new Izostanci(idIzostanka, idUcenika, idPredmetaUSkoli, datum.toString());
+			
+			sviIzostanciUcenika.clear();
+			for(Izostanci i : Izostanci.sviIzostanci) {
+				if(i.getUcenik().getPristupniPodaci().getKorisnickoIme().equals(odaberiUcenOcjBox.getValue())) {
+					sviIzostanciUcenika.appendText(i.getDatum() + " : " + i.getPredmetUSkoli().getPredmet().getNaziv() + "\n");
+				}
+			}
 		});
 		
 	}
@@ -411,6 +471,10 @@ public class ProfesorKontroler implements Initializable{
 		for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
 			predmetiPolje.appendText(pus.getSkola().getNaziv() + ", " + pus.getPredmet().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
 		}
+		
+		odjaviSeTipkaProf.setOnAction((event) -> {
+			LoginWindow.promjeniScenu("/login/Login.fxml", "Prijava", 800, 600);
+		});
 		
 	}
 	

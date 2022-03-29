@@ -26,4 +26,8 @@ public class Profesor extends Korisnik {
 		return null;
 	}
 	
+	public PristupniPodaci getPristupniPodaci() {
+		return pristupniPodaci;
+	}
+	
 }
