@@ -36,4 +36,8 @@ public class Pitanje {
 		return null;
 	}
 	
+	public String getPitanjeTekst() {
+		return pitanje;
+	}
+	
 }

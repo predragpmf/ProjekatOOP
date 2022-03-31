@@ -25,7 +25,7 @@ public class PredmetUSkoli {
 				return pus;
 			}
 		}
-		System.err.println("Predmet u skoli nije pronadjen (PredmetUSkoli.getPredmetUSkoli");
+		System.err.println("Predmet u skoli nije pronadjen (PredmetUSkoli.getPredmetUSkoli)" + id);
 		return null;
 	}
 	

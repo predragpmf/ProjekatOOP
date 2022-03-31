@@ -14,6 +14,7 @@ import application.IzmjenaBaze;
 import application.Izostanci;
 import application.Korisnik;
 import application.Ocjena;
+import application.OcjenaPredmeta;
 import application.Predmet;
 import application.PredmetUSkoli;
 import application.PristupniPodaci;
@@ -69,6 +70,8 @@ public class ProfesorKontroler implements Initializable{
 	@FXML
 	private TextField emailProfesoraPolje;
 	@FXML
+	private TextField novaLozinka;
+	@FXML
 	private TextArea skolePolje;
 	@FXML
 	private TextArea predmetiPolje;
@@ -87,6 +90,8 @@ public class ProfesorKontroler implements Initializable{
 	@FXML
 	private TextArea sviIzostanciUcenika;
 	@FXML
+	private TextArea ocjenePredmeta;
+	@FXML
 	private Button dodajUcenikeTipka;
 	@FXML
 	private Button dodajPredmetTipka;
@@ -103,6 +108,8 @@ public class ProfesorKontroler implements Initializable{
 	@FXML
 	private Button odjaviSeTipkaProf;
 	@FXML
+	private Button promjeniLozinku;
+	@FXML
 	private ChoiceBox<String> predmetProfesoraBox;
 	@FXML
 	private ChoiceBox<String> skolaProfesoraBox;
@@ -114,6 +121,8 @@ public class ProfesorKontroler implements Initializable{
 	private ChoiceBox<String> odaberiOcjBox;
 	@FXML
 	private ChoiceBox<String> odaberiSkolOcjBox;
+	@FXML
+	private ChoiceBox<String> odaberiPredOcj;
 	@FXML
 	private DatePicker odaberiDatum;
 
@@ -281,6 +290,7 @@ public class ProfesorKontroler implements Initializable{
 		
 		for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
 			sviPredmetiProfesora.appendText(pus.getPredmet().getNaziv() + ", " + pus.getSkola().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
+			odaberiPredOcj.getItems().add(pus.getPredmet().getNaziv() + "," + pus.getSkola().getNaziv() + "," + pus.getPredmet().getRazred());
 		}
 		
 		// Dodaj predmete u ChoiceBox:
@@ -320,8 +330,27 @@ public class ProfesorKontroler implements Initializable{
 			int predmetUSkoliId = IzmjenaBaze.posaljiPredmetUSkoli(predmetId, skolaId, Korisnik.prijavljeniKorisnik.getId());
 			new PredmetUSkoli(predmetUSkoliId, predmetId, skolaId, Korisnik.prijavljeniKorisnik.getId());
 			sviPredmetiProfesora.clear();
+			odaberiPredOcj.getItems().clear();
 			for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
-				sviPredmetiProfesora.appendText(pus.getPredmet().getNaziv() + ", " + pus.getSkola().getNaziv() + "\n");
+				sviPredmetiProfesora.appendText(pus.getPredmet().getNaziv() + ", " + pus.getSkola().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
+				odaberiPredOcj.getItems().add(pus.getPredmet().getNaziv() + "," + pus.getSkola().getNaziv() + "," + pus.getPredmet().getRazred());
+			}
+		});
+		odaberiPredOcj.setOnAction((event) -> {
+			ocjenePredmeta.clear();
+			String nazivPredmeta = odaberiPredOcj.getValue().split(",")[0];
+			String nazivSkole = odaberiPredOcj.getValue().split(",")[1];
+			int razred = Integer.parseInt(odaberiPredOcj.getValue().split(",")[2]);
+			int idPredmetaUSkoli = 0;
+			for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
+				if(pus.getPredmet().getNaziv().equals(nazivPredmeta) && pus.getSkola().getNaziv().equals(nazivSkole) && pus.getPredmet().getRazred() == razred) {
+					idPredmetaUSkoli = pus.getId();
+				}
+			}
+			for(OcjenaPredmeta op : OcjenaPredmeta.sveOcjenePredmeta) {
+				if(op.getPredmetUSkoli().getId() == idPredmetaUSkoli) {
+					ocjenePredmeta.appendText(op.getPitanje().getPitanjeTekst() + ": " + op.getOcjena() + "\n");
+				}
 			}
 		});
 		
@@ -474,6 +503,16 @@ public class ProfesorKontroler implements Initializable{
 		
 		odjaviSeTipkaProf.setOnAction((event) -> {
 			LoginWindow.promjeniScenu("/login/Login.fxml", "Prijava", 800, 600);
+		});
+		promjeniLozinku.setOnAction((event) -> {
+			String lozinka = novaLozinka.getText();
+			if(novaLozinka.getText().isEmpty()) {
+				obavjestenjeProzor("Niste unijeli lozinku!");
+				return;
+			}
+			String korisnickoIme = Korisnik.prijavljeniKorisnik.getPristupniPodaci().getKorisnickoIme();
+			IzmjenaBaze.posaljiPromjenuLozinke(korisnickoIme, lozinka);
+			Korisnik.prijavljeniKorisnik.getPristupniPodaci().promjeniLozinku(lozinka);
 		});
 		
 	}

@@ -30,18 +30,25 @@
                   </Text>
                   <TextField fx:id="prezimePolje" editable="false" layoutX="45.0" layoutY="138.0" prefHeight="26.0" prefWidth="400.0" />
                   <TextArea fx:id="skolePolje" editable="false" layoutX="45.0" layoutY="231.0" prefHeight="200.0" prefWidth="250.0" />
-                  <TextArea fx:id="predmetiPolje" editable="false" layoutX="400.0" layoutY="231.0" prefHeight="200.0" prefWidth="250.0" />
+                  <TextArea fx:id="predmetiPolje" editable="false" layoutX="333.0" layoutY="232.0" prefHeight="200.0" prefWidth="250.0" />
                   <Text layoutX="45.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Škole:" wrappingWidth="64.86000061035156">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="400.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Predmeti:">
+                  <Text layoutX="333.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Predmeti:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Button fx:id="odjaviSeTipkaProf" layoutX="639.0" layoutY="492.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="112.0" text="Odjavi se" />
+                  <Button fx:id="odjaviSeTipkaProf" layoutX="639.0" layoutY="495.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="112.0" text="Odjavi se" />
+                  <TextField fx:id="novaLozinka" layoutX="569.0" layoutY="84.0" />
+                  <Button fx:id="promjeniLozinku" layoutX="569.0" layoutY="127.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="124.0" text="Promjeni lozinku" />
+                  <Text layoutX="569.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nova lozinka:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
                </children></AnchorPane>
       </content>
     </Tab>
@@ -202,8 +209,8 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextArea fx:id="sviPredmetiProfesora" editable="false" layoutX="44.0" layoutY="61.0" prefHeight="469.0" prefWidth="368.0" />
-                  <Text layoutX="44.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Predmeti profesora:">
+                  <TextArea fx:id="sviPredmetiProfesora" editable="false" layoutX="42.0" layoutY="37.0" prefHeight="169.0" prefWidth="368.0" />
+                  <Text layoutX="44.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Predmeti profesora:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -221,6 +228,18 @@
                   </Text>
                   <ChoiceBox fx:id="skolaProfesoraBox" layoutX="540.0" layoutY="174.0" prefWidth="150.0" />
                   <Button fx:id="dodajPredmetProfesora" layoutX="585.0" layoutY="244.0" mnemonicParsing="false" text="Dodaj" />
+                  <ChoiceBox fx:id="odaberiPredOcj" layoutX="42.0" layoutY="257.0" prefHeight="26.0" prefWidth="255.0" />
+                  <TextArea fx:id="ocjenePredmeta" layoutX="44.0" layoutY="331.0" prefHeight="209.0" prefWidth="364.0" />
+                  <Text layoutX="44.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ocjene predmeta:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="42.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Odaberi predmet:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
         </content>

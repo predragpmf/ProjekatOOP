@@ -47,6 +47,13 @@
                   </Text>
                   <TextField fx:id="razredPolje" editable="false" layoutX="45.0" layoutY="345.0" prefHeight="26.0" prefWidth="400.0" />
                   <Button fx:id="odjaviSeTipka" layoutX="650.0" layoutY="498.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="104.0" text="Odjavi se" />
+                  <TextField fx:id="novaLozinka" layoutX="569.0" layoutY="151.0" />
+                  <Button fx:id="promjeniLozinku" layoutX="590.0" layoutY="194.0" mnemonicParsing="false" text="Promjeni lozinku" />
+                  <Text layoutX="569.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nova lozinka:" wrappingWidth="108.37800025939941">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
                </children></AnchorPane>
       </content>
     </Tab>

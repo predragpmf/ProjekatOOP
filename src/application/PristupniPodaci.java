@@ -60,4 +60,8 @@ public class PristupniPodaci {
 		return id;
 	}
 	
+	public void promjeniLozinku(String lozinka) {
+		this.lozinka = lozinka;
+	}
+	
 }

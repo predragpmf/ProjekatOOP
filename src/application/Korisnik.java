@@ -56,4 +56,8 @@ public class Korisnik {
 		return id;
 	}
 	
+	public PristupniPodaci getPristupniPodaci() {
+		return pristupniPodaci;
+	}
+	
 }

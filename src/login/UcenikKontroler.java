@@ -48,6 +48,8 @@ public class UcenikKontroler implements Initializable {
 	@FXML
 	private TextField pitanjeCetvrto;
 	@FXML
+	private TextField novaLozinka;
+	@FXML
 	private TextArea tekstVelikoPolje;
 	@FXML
 	private TextArea tekstVelikoPolje2;
@@ -55,6 +57,8 @@ public class UcenikKontroler implements Initializable {
 	private Button ocjeniProf;
 	@FXML
 	private Button odjaviSeTipka;
+	@FXML
+	private Button promjeniLozinku;
 	@FXML
 	private ChoiceBox<String> odaberiPredmet;
 	@FXML
@@ -88,6 +92,16 @@ public class UcenikKontroler implements Initializable {
 		
 		odjaviSeTipka.setOnAction((event) -> {
 			LoginWindow.promjeniScenu("/login/Login.fxml", "Prijava", 800, 600);
+		});
+		promjeniLozinku.setOnAction((event) -> {
+			String lozinka = novaLozinka.getText();
+			if(novaLozinka.getText().isEmpty()) {
+				obavjestenjeProzor("Niste unijeli lozinku!");
+				return;
+			}
+			String korisnickoIme = Korisnik.prijavljeniKorisnik.getPristupniPodaci().getKorisnickoIme();
+			IzmjenaBaze.posaljiPromjenuLozinke(korisnickoIme, lozinka);
+			Korisnik.prijavljeniKorisnik.getPristupniPodaci().promjeniLozinku(lozinka);
 		});
 		
 	}
@@ -132,24 +146,30 @@ public class UcenikKontroler implements Initializable {
 	private void ocjeniProfesora() {
 		Set<PredmetUSkoli> predmeti = new HashSet<>();
 		for(Ocjena o : Ocjena.sveOcjene) {
-			if(o.getUcenik() == Korisnik.prijavljeniKorisnik) {
+			if(o.getUcenik().getId() == Korisnik.prijavljeniKorisnik.getId()) {
 				predmeti.add(o.getPredmetUSkoli());
+				//System.out.println(o.getPredmetUSkoli().getId());
 			}
 		}
 		for(Izostanci i : Izostanci.sviIzostanci) {
-			if(i.getUcenik() == Korisnik.prijavljeniKorisnik) {
+			if(i.getUcenik().getId() == Korisnik.prijavljeniKorisnik.getId()) {
 				predmeti.add(i.getPredmetUSkoli());
+				//System.out.println(i.getPredmetUSkoli().getId());
 			}
 		}
+		for(PredmetUSkoli p : predmeti) {
+			System.out.println(p.getId());
+		}
 		for(PredmetUSkoli pus : predmeti) {
-			odaberiPredProfBox.getItems().add(pus.getPredmet().getNaziv());
+			odaberiPredProfBox.getItems().add(pus.getPredmet().getNaziv() + "," + pus.getPredmet().getRazred());
 		}
 		odaberiPredProfBox.setOnAction((event) -> {
 			profPredPolje.clear();
-			String naziv = odaberiPredProfBox.getValue();
+			String naziv = odaberiPredProfBox.getValue().split(",")[0];
+			int razred = Integer.parseInt(odaberiPredProfBox.getValue().split(",")[1]);
 			for(PredmetUSkoli pus : predmeti) {
-				if(pus.getPredmet().getNaziv().equals(naziv)) {
-					profPredPolje.appendText(pus.getProfesor().getPristupniPodaci().getKorisnickoIme() + "\n");
+				if(pus.getPredmet().getNaziv().equals(naziv) && pus.getPredmet().getRazred() == razred) {
+					profPredPolje.appendText(pus.getProfesor().getPristupniPodaci().getKorisnickoIme());
 				}
 			}
 		});
@@ -162,9 +182,10 @@ public class UcenikKontroler implements Initializable {
 
 			int idUcenika = Korisnik.prijavljeniKorisnik.getId();
 			int idPredmetaUSkoli = 0;
-			String naziv = odaberiPredProfBox.getValue();
+			String naziv = odaberiPredProfBox.getValue().split(",")[0];
+			int razred = Integer.parseInt(odaberiPredProfBox.getValue().split(",")[1]);
 			for(PredmetUSkoli pus : predmeti) {
-				if(pus.getPredmet().getNaziv().equals(naziv)) {
+				if(pus.getPredmet().getNaziv().equals(naziv) && pus.getPredmet().getRazred() == razred) {
 					idPredmetaUSkoli = pus.getId();
 				}
 			}

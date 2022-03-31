@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class IzmjenaBaze {
 	private static BazaPodataka db = UcitavanjeBaze.db;
@@ -172,5 +173,17 @@ public class IzmjenaBaze {
 			e.printStackTrace();
 		}
 		return id;
+    }
+	
+	public static void posaljiPromjenuLozinke(String username, String newPassword) {
+        try {
+            String upit = "UPDATE pristupni_podaci SET sifra = ? WHERE korisnicko_ime = ?";
+            PreparedStatement izjava = db.getVeza().prepareStatement(upit, Statement.RETURN_GENERATED_KEYS);
+            izjava.setString(1, login.LoginKontroler.hesirajLozinku(newPassword));
+            izjava.setString(2, username);
+            izjava.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
