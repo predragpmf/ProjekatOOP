@@ -27,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -71,6 +72,8 @@ public class ProfesorKontroler implements Initializable{
 	private TextField emailProfesoraPolje;
 	@FXML
 	private TextField novaLozinka;
+	@FXML
+	private TextField emailPolje;
 	@FXML
 	private TextArea skolePolje;
 	@FXML
@@ -125,6 +128,8 @@ public class ProfesorKontroler implements Initializable{
 	private ChoiceBox<String> odaberiPredOcj;
 	@FXML
 	private DatePicker odaberiDatum;
+	@FXML
+	private PasswordField emailLozinkaPolje;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -150,6 +155,37 @@ public class ProfesorKontroler implements Initializable{
 		//Ocjenjivanje tab:
 		dodajOcjenu();
 				
+	}
+	
+	
+	private void ispisiInfo() {
+		
+		imePolje.setText(Korisnik.prijavljeniKorisnik.getIme());
+		prezimePolje.setText(Korisnik.prijavljeniKorisnik.getPrezime());
+		for(Skola s : Korisnik.prijavljeniKorisnik.sveSkoleProfesor) {
+			skolePolje.appendText(s.getNaziv() + "\n");
+		}
+		for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
+			predmetiPolje.appendText(pus.getSkola().getNaziv() + ", " + pus.getPredmet().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
+		}
+		
+		odjaviSeTipkaProf.setOnAction((event) -> {
+			LoginWindow.promjeniScenu("/login/Login.fxml", "Prijava", 800, 600);
+		});
+		
+		promjeniLozinku.setOnAction((event) -> {
+			String lozinka = novaLozinka.getText();
+			if(novaLozinka.getText().isEmpty()) {
+				obavjestenjeProzor("Niste unijeli lozinku!");
+				return;
+			}
+			String korisnickoIme = Korisnik.prijavljeniKorisnik.getPristupniPodaci().getKorisnickoIme();
+			IzmjenaBaze.posaljiPromjenuLozinke(korisnickoIme, lozinka);
+			PristupniPodaci.promjeniLozinku(korisnickoIme, LoginKontroler.hesirajLozinku(lozinka));
+			obavjestenjeProzor("Uspjesna promjena lozinke!");
+			Email.posalji(emailPolje.getText(), emailLozinkaPolje.getText(), Korisnik.prijavljeniKorisnik.getPristupniPodaci().getEmail(), "Lozinka promjenjena", "Lozinka za korisnicko ime: " + korisnickoIme + " je uspjesno promjenjena!" );
+		});
+		
 	}
 	
 	
@@ -402,9 +438,6 @@ public class ProfesorKontroler implements Initializable{
 		});
 		
 		odaberiUcenOcjBox.setOnAction((event) -> {
-			//boolean skolaPrazna = odaberiSkolOcjBox.getSelectionModel().isEmpty();
-			//boolean predmetPrazan = odaberiPredOcjBox.getSelectionModel().isEmpty();
-			
 			sveOcjeneUcenika.clear();
 			String korisnickoIme = odaberiUcenOcjBox.getValue();
 			for(Ocjena o : Ocjena.sveOcjene) {
@@ -430,8 +463,6 @@ public class ProfesorKontroler implements Initializable{
 			LocalDate vrijednostDatuma = odaberiDatum.getValue();
 			java.sql.Date datum = Date.valueOf(vrijednostDatuma);
 			int ocjena = Integer.parseInt(odaberiOcjBox.getValue());
-			//long mili = System.currentTimeMillis();  
-		    //java.sql.Date datum = new java.sql.Date(mili);
 			for(Ucenik u : Ucenik.sviUcenici) {
 				if(u.getPristupniPodaci().getKorisnickoIme().equals(odaberiUcenOcjBox.getValue())) {
 					idUcenika = u.getId();
@@ -485,34 +516,6 @@ public class ProfesorKontroler implements Initializable{
 					sviIzostanciUcenika.appendText(i.getDatum() + " : " + i.getPredmetUSkoli().getPredmet().getNaziv() + "\n");
 				}
 			}
-		});
-		
-	}
-	
-	
-	private void ispisiInfo() {
-		
-		imePolje.setText(Korisnik.prijavljeniKorisnik.getIme());
-		prezimePolje.setText(Korisnik.prijavljeniKorisnik.getPrezime());
-		for(Skola s : Korisnik.prijavljeniKorisnik.sveSkoleProfesor) {
-			skolePolje.appendText(s.getNaziv() + "\n");
-		}
-		for(PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
-			predmetiPolje.appendText(pus.getSkola().getNaziv() + ", " + pus.getPredmet().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
-		}
-		
-		odjaviSeTipkaProf.setOnAction((event) -> {
-			LoginWindow.promjeniScenu("/login/Login.fxml", "Prijava", 800, 600);
-		});
-		promjeniLozinku.setOnAction((event) -> {
-			String lozinka = novaLozinka.getText();
-			if(novaLozinka.getText().isEmpty()) {
-				obavjestenjeProzor("Niste unijeli lozinku!");
-				return;
-			}
-			String korisnickoIme = Korisnik.prijavljeniKorisnik.getPristupniPodaci().getKorisnickoIme();
-			IzmjenaBaze.posaljiPromjenuLozinke(korisnickoIme, lozinka);
-			Korisnik.prijavljeniKorisnik.getPristupniPodaci().promjeniLozinku(lozinka);
 		});
 		
 	}

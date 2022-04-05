@@ -56,12 +56,24 @@ public class PristupniPodaci {
 		return lozinka;
 	}
 	
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
+	}
+	
 	public int getId() {
 		return id;
 	}
 	
-	public void promjeniLozinku(String lozinka) {
-		this.lozinka = lozinka;
+	public String getEmail() {
+		return email;
+	}
+	
+	public static void promjeniLozinku(String korisnickoIme, String lozinka) {
+		for(PristupniPodaci pp : sviPristupniPodaci) {
+			if(pp.getKorisnickoIme().equals(korisnickoIme)) {
+				pp.setLozinka(lozinka);
+			}
+		}
 	}
 	
 }

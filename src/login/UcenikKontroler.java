@@ -16,11 +16,13 @@ import application.Korisnik;
 import application.Ocjena;
 import application.OcjenaPredmeta;
 import application.PredmetUSkoli;
+import application.PristupniPodaci;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -50,6 +52,8 @@ public class UcenikKontroler implements Initializable {
 	@FXML
 	private TextField novaLozinka;
 	@FXML
+	private TextField emailPolje;
+	@FXML
 	private TextArea tekstVelikoPolje;
 	@FXML
 	private TextArea tekstVelikoPolje2;
@@ -63,6 +67,8 @@ public class UcenikKontroler implements Initializable {
 	private ChoiceBox<String> odaberiPredmet;
 	@FXML
 	private ChoiceBox<String> odaberiPredProfBox;
+	@FXML
+	private PasswordField emailLozinkaPolje;
 	
 	
 	@Override
@@ -101,7 +107,9 @@ public class UcenikKontroler implements Initializable {
 			}
 			String korisnickoIme = Korisnik.prijavljeniKorisnik.getPristupniPodaci().getKorisnickoIme();
 			IzmjenaBaze.posaljiPromjenuLozinke(korisnickoIme, lozinka);
-			Korisnik.prijavljeniKorisnik.getPristupniPodaci().promjeniLozinku(lozinka);
+			PristupniPodaci.promjeniLozinku(korisnickoIme, LoginKontroler.hesirajLozinku(lozinka));
+			obavjestenjeProzor("Uspjesna promjena lozinke!");
+			Email.posalji(emailPolje.getText(), emailLozinkaPolje.getText(), Korisnik.prijavljeniKorisnik.getPristupniPodaci().getEmail(), "Lozinka promjenjena", "Lozinka za korisnicko ime: " + korisnickoIme + " je uspjesno promjenjena!" );
 		});
 		
 	}
@@ -117,8 +125,6 @@ public class UcenikKontroler implements Initializable {
 		odaberiPredmet.getItems().addAll(ocjene);
 		odaberiPredmet.getItems().add("Svi");
 		odaberiPredmet.setOnAction((event) -> {
-		    //int selectedIndex = odaberiPredmet.getSelectionModel().getSelectedIndex();
-		    //Object selectedItem = odaberiPredmet.getSelectionModel().getSelectedItem();
 			String nazivOdabranogPredmeta = (String) odaberiPredmet.getValue();
 			tekstVelikoPolje.clear();
 			for(Ocjena o : Korisnik.prijavljeniKorisnik.ocjeneKorisnika) {
@@ -129,8 +135,6 @@ public class UcenikKontroler implements Initializable {
 						ocjene.add(o.getPredmetUSkoli().getPredmet().getNaziv());
 					}
 				}
-		    //System.out.println("Selection made: [" + selectedIndex + "] " + selectedItem);
-		    //System.out.println("   ComboBox.getValue(): " + odaberiPredmet.getValue());
 		});
 		
 	}
@@ -148,13 +152,11 @@ public class UcenikKontroler implements Initializable {
 		for(Ocjena o : Ocjena.sveOcjene) {
 			if(o.getUcenik().getId() == Korisnik.prijavljeniKorisnik.getId()) {
 				predmeti.add(o.getPredmetUSkoli());
-				//System.out.println(o.getPredmetUSkoli().getId());
 			}
 		}
 		for(Izostanci i : Izostanci.sviIzostanci) {
 			if(i.getUcenik().getId() == Korisnik.prijavljeniKorisnik.getId()) {
 				predmeti.add(i.getPredmetUSkoli());
-				//System.out.println(i.getPredmetUSkoli().getId());
 			}
 		}
 		for(PredmetUSkoli p : predmeti) {
@@ -198,7 +200,7 @@ public class UcenikKontroler implements Initializable {
 		
 	}
 	
-private void obavjestenjeProzor(String poruka) {
+	private void obavjestenjeProzor(String poruka) {
 		
 		Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Ocjena!");

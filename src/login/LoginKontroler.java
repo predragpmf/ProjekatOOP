@@ -58,7 +58,7 @@ public class LoginKontroler implements Initializable {
 		
 		prijavaTipka.setOnAction(event -> {
             String korisnickoIme = korisnikUnos.getText().strip();
-            String lozinka = lozinkaUnos.getText().strip();
+            String lozinka = lozinkaUnos.getText();
             for(PristupniPodaci pp : PristupniPodaci.sviPristupniPodaci) {
             	if(pp.getKorisnickoIme().equals(korisnickoIme)) {
             		if(pp.getLozinka().equals(hesirajLozinku(lozinka))) {
