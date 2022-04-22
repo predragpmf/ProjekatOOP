@@ -385,6 +385,9 @@ public class ProfesorKontroler implements Initializable {
             }
             for (OcjenaPredmeta op : OcjenaPredmeta.sveOcjenePredmeta) {
                 if (op.getPredmetUSkoli().getId() == idPredmetaUSkoli) {
+                    if (op.getPitanje().getPitanjeTekst().startsWith("Nastava")) {
+                        ocjenePredmeta.appendText("-------------------------------------------------\n");
+                    }
                     ocjenePredmeta.appendText(op.getPitanje().getPitanjeTekst() + ": " + op.getOcjena() + "\n");
                 }
             }
@@ -472,6 +475,20 @@ public class ProfesorKontroler implements Initializable {
                 if (pus.getPredmet().getNaziv().equals(nazivPredmeta) && pus.getPredmet().getRazred() == razredPredmeta && pus.getSkola().getNaziv().equals(nazivSkole) && pus.getSkola().getMjesto().equals(mjestoSkole)) {
                     idPredmetaUSkoli = pus.getId();
                 }
+            }
+            int brojOcjena = 0;
+            java.util.Date danasDatum = new Date(System.currentTimeMillis());
+            for (Ocjena o : Ocjena.sveOcjene) {
+                if (o.getUcenik().getId() == idUcenika) {
+                    System.out.println(o.getDatum());
+                    if (danasDatum.toString().equals(o.getDatum())) {
+                        brojOcjena++;
+                    }
+                }
+            }
+            if (brojOcjena >= 2) {
+                obavjestenjeProzor("Najvise dvie u jednom danu!");
+                return;
             }
             int idOcjene = IzmjenaBaze.posaljiOcjena(idUcenika, idPredmetaUSkoli, ocjena, datum);
             new Ocjena(idOcjene, idUcenika, idPredmetaUSkoli, ocjena, datum.toString());
