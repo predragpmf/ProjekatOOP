@@ -163,7 +163,7 @@ public class ProfesorKontroler implements Initializable {
         imePolje.setText(Korisnik.prijavljeniKorisnik.getIme());
         prezimePolje.setText(Korisnik.prijavljeniKorisnik.getPrezime());
         for (Skola s : Korisnik.prijavljeniKorisnik.sveSkoleProfesor) {
-            skolePolje.appendText(s.getNaziv() + "\n");
+            skolePolje.appendText(s.getNaziv() + "," + s.getMjesto() + "\n");
         }
         for (PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
             predmetiPolje.appendText(pus.getSkola().getNaziv() + ", " + pus.getPredmet().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
@@ -263,7 +263,9 @@ public class ProfesorKontroler implements Initializable {
     private void dodajSkolu() {
 
         for (Skola s : Skola.sveSkole) {
-            sveSkolePolje.appendText(s.ispisSkole(s) + "\n");
+            if (s != null) {
+                sveSkolePolje.appendText(s.ispisSkole(s) + "\n");
+            }
         }
         dodajSkoluTipka.setOnAction(event -> {
             String naziv = nazivSkolePolje.getText();
@@ -278,8 +280,10 @@ public class ProfesorKontroler implements Initializable {
             }
             sveSkolePolje.clear();
             for (Skola s : Skola.sveSkole) {
-                sveSkolePolje.appendText(s.getNaziv() + ", " + s.getGrad() + ", " + s.getMjesto() + "\n");
-                skolaProfesoraBox.getItems().add(s.getNaziv() + " " + s.getMjesto());
+                if (s != null) {
+                    sveSkolePolje.appendText(s.getNaziv() + ", " + s.getGrad() + ", " + s.getMjesto() + ", " + s.getDrzava() + "\n");
+                    skolaProfesoraBox.getItems().add(s.getNaziv() + " " + s.getMjesto());
+                }
             }
         });
 
@@ -338,15 +342,22 @@ public class ProfesorKontroler implements Initializable {
 
         // Dodaj skole u ChoiceBox
         for (Skola s : Skola.sveSkole) {
-            skolaProfesoraBox.getItems().add(s.getNaziv() + " " + s.getMjesto());
+            skolaProfesoraBox.getItems().add(s.getNaziv() + "," + s.getMjesto());
         }
 
         dodajPredmetProfesora.setOnAction(event -> {
             String nazivOdabranogPredmeta = (String) predmetProfesoraBox.getValue();
-            String nazivOdabraneSkole = (String) skolaProfesoraBox.getValue();
+            System.out.println(nazivOdabranogPredmeta);
+
+            String nazivOdabraneSkole = (String) skolaProfesoraBox.getValue().split(",")[0];
+            System.out.println(nazivOdabraneSkole);
+            String nazivOdabranogMjesta = (String) skolaProfesoraBox.getValue().split(",")[1];
+            System.out.println(nazivOdabranogMjesta);
+
             //Provjera postojanja:
             for (PredmetUSkoli pus : PredmetUSkoli.sviPredmetiUSkoli) {
-                if (nazivOdabranogPredmeta.equals(pus.getPredmet().getNaziv()) && nazivOdabraneSkole.equals(pus.getSkola().getNaziv())) {
+                if (Korisnik.prijavljeniKorisnik.getPristupniPodaci().getKorisnickoIme().equals(pus.getProfesor().getPristupniPodaci().getKorisnickoIme()) && nazivOdabranogPredmeta.equals(pus.getPredmet().getNaziv()) &&
+                        nazivOdabraneSkole.equals(pus.getSkola().getNaziv()) && nazivOdabranogMjesta.equals(pus.getSkola().getMjesto())) {
                     obavjestenjeProzor("Profesor vec predaje taj predmet!");
                     return;
                 }
@@ -360,7 +371,9 @@ public class ProfesorKontroler implements Initializable {
             }
             for (Skola s : Skola.sveSkole) {
                 if (s.getNaziv().equals(nazivOdabraneSkole)) {
-                    skolaId = s.getId();
+                    if (s.getMjesto().equals(nazivOdabranogMjesta)) {
+                        skolaId = s.getId();
+                    }
                 }
             }
             int predmetUSkoliId = IzmjenaBaze.posaljiPredmetUSkoli(predmetId, skolaId, Korisnik.prijavljeniKorisnik.getId());
@@ -370,6 +383,10 @@ public class ProfesorKontroler implements Initializable {
             for (PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
                 sviPredmetiProfesora.appendText(pus.getPredmet().getNaziv() + ", " + pus.getSkola().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
                 odaberiPredOcj.getItems().add(pus.getPredmet().getNaziv() + "," + pus.getSkola().getNaziv() + "," + pus.getPredmet().getRazred());
+            }
+            predmetiPolje.clear();
+            for (PredmetUSkoli pus : Korisnik.prijavljeniKorisnik.predajePredmete) {
+                predmetiPolje.appendText(pus.getSkola().getNaziv() + ", " + pus.getPredmet().getNaziv() + ", " + pus.getPredmet().getRazred() + "\n");
             }
         });
         odaberiPredOcj.setOnAction((event) -> {

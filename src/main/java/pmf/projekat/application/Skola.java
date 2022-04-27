@@ -10,9 +10,14 @@ public class Skola {
     public Skola(int id, String naziv, String grad, String mjesto, String drzava) throws Exception {
         this.id = id;
         this.naziv = naziv;
+        //System.out.print(naziv);
         this.grad = grad;
+        //System.out.print(grad);
         this.mjesto = mjesto;
+        //System.out.print(mjesto);
         this.drzava = drzava;
+        //System.out.print(drzava);
+        //System.out.println();
         if (!skolaPostoji(this)) {
             sveSkole.add(this);
         } else {
